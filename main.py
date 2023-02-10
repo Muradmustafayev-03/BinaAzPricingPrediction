@@ -4,12 +4,14 @@ import pandas as pd
 from util import format_df
 
 
-df = format_df(pd.read_csv('data/modified_train_binaaz.csv', index_col=False))
+df = format_df(pd.read_csv('data/modified_train_binaaz.csv'))
 
-x_train = df[['floors', 'area', 'rooms', 'new_building', 'longitude', 'latitude']][:18000]
-x_test = df[['floors', 'area', 'rooms', 'new_building', 'longitude', 'latitude']][18000:]
-y_train = df['price'][:18000]
-y_test = df['price'][18000:]
+pivot = int(len(df.index) * 0.8)
+
+x_train = df[['floor', 'floors', 'area', 'new_building', 'longitude', 'latitude']][:pivot]
+x_test = df[['floor', 'floors', 'area', 'new_building', 'longitude', 'latitude']][pivot:]
+y_train = df['price'][:pivot]
+y_test = df['price'][pivot:]
 
 reg = RandomForestRegressor()
 reg.fit(x_train, y_train)

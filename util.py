@@ -15,9 +15,10 @@ def format_df(df: pd.DataFrame):
     df['new_building'] = [int(value == 'Yeni tikili') for value in df['category']]
     df['area'] = [float(value[:-3]) for value in df['area']]
     df['floors'] = [int(s.split(' / ')[1]) for s in df['floor']]
+    df['floor'] = [int(s.split(' / ')[0]) for s in df['floor']]
 
     df = df[[
-        'latitude', 'longitude', 'floors', 'area', 'rooms', 'new_building', 'price'
+        'latitude', 'longitude', 'floor', 'floors', 'area', 'new_building', 'price'
     ]]
 
     for key in df.keys():
